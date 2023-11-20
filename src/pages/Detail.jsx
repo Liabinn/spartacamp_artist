@@ -46,7 +46,7 @@ function Detail({ cardList, setCardList }) {
   }
 
   return (
-    <div style={{display: 'flex', justifyContent: 'center'}}>
+    <EntireBoxStyle>
       <DetailBoxStyle>
         <HomeButtonStyle onClick={()=>{
           navigate('/')
@@ -57,18 +57,23 @@ function Detail({ cardList, setCardList }) {
             <CardNameStyle>To. {founded.member}</CardNameStyle>
             <CardNameStyle>From. {founded.nickname}</CardNameStyle>
             {isEditing ? <EdieingTextareaStyle type='text' maxLength={100} onChange={handleChangeEditText}>{founded.contents}</EdieingTextareaStyle> : <CardContentStyle>{founded.contents}</CardContentStyle>}
-            <div style={{display: 'flex', justifyContent: 'flex-end', marginTop: '10px', width: '325px'}}>
+            <ButtonBoxStyle>
               {isEditing ? <CardButtonStyle onClick={() => {
               handleClickModifyContents(founded.id)
             }}>수정완료</CardButtonStyle> : <CardButtonStyle onClick={handleOnClickModify}>수정</CardButtonStyle>}
             {isEditing ? <CardButtonStyle onClick={handleOnClickModify}>수정취소</CardButtonStyle> : <CardButtonStyle onClick={handleOnClickDelete}>삭제</CardButtonStyle>}
-            </div>
+            </ButtonBoxStyle>
           </CardBoxStyle>
         </CardStyle>
       </DetailBoxStyle>
-    </div>
+    </EntireBoxStyle>
   )
 }
+
+const EntireBoxStyle = styled.div`
+  display: flex;
+  justify-content: center;
+`
 
 const Bg = styled.div`
   background-image: url(${image});
@@ -180,6 +185,13 @@ const CardButtonStyle = styled.button`
     color: white;
     cursor: pointer;
   }
+`
+
+const ButtonBoxStyle = styled.div`
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 10px;
+  width: 325px;
 `
 
 export default Detail
