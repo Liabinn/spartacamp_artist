@@ -1,6 +1,7 @@
-import React, { useState } from 'react'
+import React, { useState, useContext } from 'react'
 import { v4 as uuidv4 } from "uuid"
 import styled from 'styled-components';
+import { EntireContexts } from 'context/EntireContext';
 
 const selectList = [
   { value: 'default', name: '멤버 선택' },
@@ -8,7 +9,10 @@ const selectList = [
   { value: '수현', name: '수현' },
 ]
 
-function Input({setCardList}) {
+function Input() {
+  // Context Data
+  const {setCardList} = useContext(EntireContexts)
+
   const [nickname, setNickName] = useState('');
   const [contents, setContents] = useState('');
   const [selected, setSelected] = useState('멤버 선택');
@@ -30,8 +34,7 @@ function Input({setCardList}) {
     setSelected('멤버 선택')
     setNickName('');
     setContents('');
-
-    console.log(newCard);
+    alert('팬레터가 등록되었습니다.')
   }
   const handleSelect = (e) => {
     setSelected(e.target.value);

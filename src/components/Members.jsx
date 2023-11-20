@@ -1,5 +1,7 @@
-import React, { useState } from 'react'
+import React from 'react'
 import styled from 'styled-components';
+import { useContext } from 'react';
+import { EntireContexts } from 'context/EntireContext';
 
 const members = [
     { name: "전체" },
@@ -7,7 +9,9 @@ const members = [
     { name: "수현" },
   ];
 
-function Members({selectMember, setSelectMember}) {
+function Members() {
+
+const { setSelectMember } = useContext(EntireContexts);
 
 const onClickMemberSelector =(member) => {
   setSelectMember(member);
@@ -15,14 +19,11 @@ const onClickMemberSelector =(member) => {
 
   return (
     <MembersStyle>
-      <MembersButtonStyle onClick={()=>onClickMemberSelector('전체')}>전체보기</MembersButtonStyle>
-      <MembersButtonStyle onClick={()=>onClickMemberSelector('찬혁')}>찬혁</MembersButtonStyle>
-      <MembersButtonStyle onClick={()=>onClickMemberSelector('수현')}>수현</MembersButtonStyle>
-      {/* {members.map(members => 
-        <MembersButtonStyle onClick={()=>onClickMemberSelector('전체')}>
+      {members.map(members => 
+        <MembersButtonStyle key={members.name} onClick={()=>onClickMemberSelector(`${members.name}`)}>
           {members.name}
         </MembersButtonStyle>
-      )} */}
+      )}
     </MembersStyle>
   )
 }

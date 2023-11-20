@@ -1,12 +1,15 @@
-import React, { useState } from 'react'
-import { useNavigate, useLocation, useParams } from 'react-router-dom'
+import React, { useContext, useState } from 'react'
+import { useNavigate, useLocation } from 'react-router-dom'
 import styled from 'styled-components';
 import image from '../image/default-avatar.png'
+import { EntireContexts } from 'context/EntireContext';
 
 
-function Detail({ cardList, setCardList }) {
+function Detail() {
   // const params = useParams(); // URL 뒤에 붙은 값들이 객체로 담겨옵니다.
   // const { memberId, name } = params; // 꺼내서 쓰실 때는 구조분해 할당 or 하나씩 접근해서 사용하시면 됩니다
+
+  const {cardList, setCardList} = useContext(EntireContexts)
 
   const location = useLocation();
   const navigate = useNavigate();
@@ -18,9 +21,7 @@ function Detail({ cardList, setCardList }) {
       alert('삭제되었습니다.')
       setCardList(cardList.filter(card => card.id !== founded.id));
       navigate('/');
-    } else {
-      alert('취소되었습니다.')
-    }
+    } 
   }
 
   const [isEditing, setIsEditing] = useState(false);
@@ -48,7 +49,7 @@ function Detail({ cardList, setCardList }) {
   }
 
   return (
-    <div style={{display: 'flex', justifyContent: 'center'}}>
+    <EntireBoxStyle>
       <DetailBoxStyle>
         <HomeButtonStyle onClick={()=>{
           navigate('/')
@@ -59,18 +60,23 @@ function Detail({ cardList, setCardList }) {
             <CardNameStyle>To. {founded.member}</CardNameStyle>
             <CardNameStyle>From. {founded.nickname}</CardNameStyle>
             {isEditing ? <EdieingTextareaStyle type='text' maxLength={100} onChange={handleChangeEditText}>{founded.contents}</EdieingTextareaStyle> : <CardContentStyle>{founded.contents}</CardContentStyle>}
-            <div style={{display: 'flex', justifyContent: 'flex-end', marginTop: '10px', width: '325px'}}>
+            <ButtonBoxStyle>
               {isEditing ? <CardButtonStyle onClick={() => {
               handleClickModifyContents(founded.id)
             }}>수정완료</CardButtonStyle> : <CardButtonStyle onClick={handleOnClickModify}>수정</CardButtonStyle>}
             {isEditing ? <CardButtonStyle onClick={handleOnClickModify}>수정취소</CardButtonStyle> : <CardButtonStyle onClick={handleOnClickDelete}>삭제</CardButtonStyle>}
-            </div>
+            </ButtonBoxStyle>
           </CardBoxStyle>
         </CardStyle>
       </DetailBoxStyle>
-    </div>
+    </EntireBoxStyle>
   )
 }
+
+const EntireBoxStyle = styled.div`
+  display: flex;
+  justify-content: center;
+`
 
 const Bg = styled.div`
   background-image: url(${image});
@@ -111,13 +117,12 @@ const CardStyle = styled.div`
   align-items: center;
   border: 1px solid white;
   width: 500px;
-  height: 300px;
+  min-height: 300px;
   box-shadow: 3px 2px 15px 0 rgb(255, 104, 174);
   border-radius: 15px;
   padding: 20px;
   margin: 13px;
   transition: 0.3s;
-
 `
 
 const CardBoxStyle = styled.ul`
@@ -141,7 +146,7 @@ const CardContentStyle = styled.li`
   border: 1px solid white;
   border-radius: 5px;
   width: 320px;
-  height: 150px;
+  min-height: 150px;
   white-space: wrap;
   line-height: 150%;
 `
@@ -182,6 +187,13 @@ const CardButtonStyle = styled.button`
     color: white;
     cursor: pointer;
   }
+`
+
+const ButtonBoxStyle = styled.div`
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 10px;
+  width: 325px;
 `
 
 export default Detail
