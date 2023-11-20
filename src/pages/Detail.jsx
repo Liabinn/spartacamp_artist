@@ -18,8 +18,6 @@ function Detail({ cardList, setCardList }) {
       alert('삭제되었습니다.')
       setCardList(cardList.filter(card => card.id !== founded.id));
       navigate('/');
-    } else {
-      alert('취소되었습니다.')
     }
   }
 
@@ -111,7 +109,7 @@ const CardStyle = styled.div`
   align-items: center;
   border: 1px solid white;
   width: 500px;
-  height: 300px;
+  min-height: 300px;
   box-shadow: 3px 2px 15px 0 rgb(255, 104, 174);
   border-radius: 15px;
   padding: 20px;
@@ -141,7 +139,7 @@ const CardContentStyle = styled.li`
   border: 1px solid white;
   border-radius: 5px;
   width: 320px;
-  height: 150px;
+  min-height: 150px;
   white-space: wrap;
   line-height: 150%;
 `

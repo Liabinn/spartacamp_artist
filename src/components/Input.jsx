@@ -30,8 +30,7 @@ function Input({setCardList}) {
     setSelected('멤버 선택')
     setNickName('');
     setContents('');
-
-    console.log(newCard);
+    alert('팬레터가 등록되었습니다.')
   }
   const handleSelect = (e) => {
     setSelected(e.target.value);

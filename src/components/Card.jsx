@@ -3,15 +3,6 @@ import { useNavigate } from 'react-router-dom'
 import styled from 'styled-components';
 import image from '../image/default-avatar.png'
 
-const Bg = styled.div`
-  background-image: url(${image});
-  background-position: center;
-  background-size: cover;
-  border-radius: 50px;
-  width: 100px;
-  height: 100px;
-`
-
 function Card({memberId, member, nickname, contents}) {
 
   const navigate = useNavigate();
@@ -48,6 +39,15 @@ const CardStyle = styled.div`
     color: white;
     cursor: pointer;
   }
+`
+
+const Bg = styled.div`
+  background-image: url(${image});
+  background-position: center;
+  background-size: cover;
+  border-radius: 50px;
+  width: 100px;
+  height: 100px;
 `
 
 const CardBoxStyle = styled.ul`
