@@ -1,16 +1,17 @@
-import React from 'react'
-import { useNavigate } from 'react-router-dom'
-import styled from 'styled-components';
-import image from '../image/default-avatar.png'
+import React from "react";
+import { useNavigate } from "react-router-dom";
+import styled from "styled-components";
+import image from "../image/default-avatar.png";
 
-function Card({memberId, member, nickname, contents}) {
-
+function Card({ memberId, member, nickname, contents }) {
   const navigate = useNavigate();
 
   return (
-    <CardStyle onClick={()=>{
-      navigate(`/Detail/${memberId}`, { state: {memberId} })
-    }}>
+    <CardStyle
+      onClick={() => {
+        navigate(`/Detail/${memberId}`, { state: { memberId } });
+      }}
+    >
       <Bg></Bg>
       <CardBoxStyle>
         <CardNameStyle>To. {member}</CardNameStyle>
@@ -18,7 +19,7 @@ function Card({memberId, member, nickname, contents}) {
         <CardContentStyle>{contents}</CardContentStyle>
       </CardBoxStyle>
     </CardStyle>
-  )
+  );
 }
 
 const CardStyle = styled.div`
@@ -39,7 +40,7 @@ const CardStyle = styled.div`
     color: white;
     cursor: pointer;
   }
-`
+`;
 
 const Bg = styled.div`
   background-image: url(${image});
@@ -48,11 +49,11 @@ const Bg = styled.div`
   border-radius: 50px;
   width: 100px;
   height: 100px;
-`
+`;
 
 const CardBoxStyle = styled.ul`
   width: 350px;
-`
+`;
 
 const CardNameStyle = styled.li`
   color: rgb(95, 2, 46);
@@ -60,7 +61,7 @@ const CardNameStyle = styled.li`
   font-weight: bolder;
   margin: 5px;
   padding: 5px;
-`
+`;
 
 const CardContentStyle = styled.li`
   color: rgb(95, 2, 46);
@@ -75,6 +76,6 @@ const CardContentStyle = styled.li`
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-`
+`;
 
-export default Card
+export default Card;

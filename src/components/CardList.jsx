@@ -1,31 +1,41 @@
-import React from 'react'
-import Card from './Card';
-import styled from 'styled-components';
+import React from "react";
+import Card from "./Card";
+import styled from "styled-components";
 
-function CardList({cardList, selectMember}) {
-
+function CardList({ cardList, selectMember }) {
   // selectMember에 따라 filter를 해주고 밑에서 그리자! 라는 취지.
-  const filtered = selectMember === '전체' ? cardList : cardList.filter(member => member.member === selectMember);
+  const filtered =
+    selectMember === "전체"
+      ? cardList
+      : cardList.filter((member) => member.member === selectMember);
 
   // 데이터가 없을 시 보여줄 UI
   if (filtered.length === 0) {
-    return <CardListStyle><CardNoneStyle>{selectMember}에게 남겨진 팬레터가 없습니다. 😥<br /> 첫 번째 팬레터의 주인공이 되어주세요! 😉</CardNoneStyle></CardListStyle>
+    return (
+      <CardListStyle>
+        <CardNoneStyle>
+          {selectMember}에게 남겨진 팬레터가 없습니다. 😥
+          <br /> 첫 번째 팬레터의 주인공이 되어주세요! 😉
+        </CardNoneStyle>
+      </CardListStyle>
+    );
   }
 
   return (
     <CardListStyle>
-      {filtered.map(member => {
+      {filtered.map((member) => {
         return (
           <Card
-        key={member.id}
-        memberId={member.id}
-        member={member.member}
-        nickname={member.nickname}
-        contents={member.contents} />
-        )
+            key={member.id}
+            memberId={member.id}
+            member={member.member}
+            nickname={member.nickname}
+            contents={member.contents}
+          />
+        );
       })}
     </CardListStyle>
-  )
+  );
 }
 
 const CardListStyle = styled.div`
@@ -35,7 +45,7 @@ const CardListStyle = styled.div`
   align-items: center;
   column-gap: 1rem;
   margin-bottom: 65px;
-`
+`;
 
 const CardNoneStyle = styled.div`
   width: 500px;
@@ -48,6 +58,6 @@ const CardNoneStyle = styled.div`
   font-weight: bolder;
   line-height: 200%;
   text-align: center;
-`
+`;
 
-export default CardList
+export default CardList;

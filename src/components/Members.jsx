@@ -1,27 +1,25 @@
-import React, { useState } from 'react'
-import styled from 'styled-components';
+import styled, { css } from "styled-components";
 
-const members = [
-    { name: "전체" },
-    { name: "찬혁" },
-    { name: "수현" },
-  ];
+const members = [{ name: "전체" }, { name: "찬혁" }, { name: "수현" }];
 
-function Members({setSelectMember}) {
-
-const onClickMemberSelector =(member) => {
-  setSelectMember(member);
-}
+function Members({ selectMember, setSelectMember }) {
+  const onClickMemberSelector = (member) => {
+    setSelectMember(member);
+  };
 
   return (
     <MembersStyle>
-      {members.map(members => 
-        <MembersButtonStyle key={members.name} onClick={()=>onClickMemberSelector(`${members.name}`)}>
+      {members.map((members) => (
+        <MembersListStyle
+          $selectMember={selectMember}
+          key={members.name}
+          onClick={() => onClickMemberSelector(`${members.name}`)}
+        >
           {members.name}
-        </MembersButtonStyle>
-      )}
+        </MembersListStyle>
+      ))}
     </MembersStyle>
-  )
+  );
 }
 
 const MembersStyle = styled.ul`
@@ -30,15 +28,15 @@ const MembersStyle = styled.ul`
   align-items: center;
   column-gap: 1rem;
   margin-bottom: 20px;
-`
+`;
 
-const MembersButtonStyle = styled.button`
+const MembersListStyle = styled.li`
   font-size: medium;
   font-weight: bolder;
-  color: rgb(95, 2, 46);
+  text-align: center;
+  line-height: 200%;
   width: 155px;
   height: 35px;
-  background-color: transparent;
   border-radius: 5px;
   border: 1px solid white;
   box-shadow: 3px 2px 15px 0 rgb(255, 255, 255);
@@ -48,12 +46,19 @@ const MembersButtonStyle = styled.button`
     color: white;
     cursor: pointer;
   }
-  &:active,
-  &:focus,
-  &.active {
-    background-color: rgb(255, 104, 174);
-    color: white;
-  }
-`
+
+  ${(props) => {
+    if (props.$selectMember === props.children) {
+      return css`
+        background-color: rgb(255, 104, 174);
+        color: white;
+      `;
+    }
+    return css`
+      background-color: transparent;
+      color: rgb(95, 2, 46);
+    `;
+  }}
+`;
 
 export default Members;
