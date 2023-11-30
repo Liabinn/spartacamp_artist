@@ -1,17 +1,27 @@
 import styled, { css } from "styled-components";
+import { useDispatch, useSelector } from "react-redux";
+import { switchMember } from "redux/modules/membersSlice";
 
 const members = [{ name: "전체" }, { name: "찬혁" }, { name: "수현" }];
 
-function Members({ selectMember, setSelectMember }) {
-  const onClickMemberSelector = (member) => {
-    setSelectMember(member);
+function Members() {
+
+  const selectMember = useSelector((state) => {
+    return state.membersSlice
+  })
+
+  const dispatch = useDispatch();
+
+  const onClickMemberSelector = (event) => {
+    if(event.target === event.currentTarget) return
   };
+
+  // dispatch(switchMember(event.target.textContent))
 
   return (
     <MembersStyle>
       {members.map((members) => (
         <MembersListStyle
-          $selectMember={selectMember}
           key={members.name}
           onClick={() => onClickMemberSelector(`${members.name}`)}
         >

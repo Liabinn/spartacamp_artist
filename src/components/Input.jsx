@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import { v4 as uuidv4 } from "uuid";
 import styled from "styled-components";
+import { useDispatch } from "react-redux";
+import { addCard } from "redux/modules/lettersSlice";
 
 const selectList = [
   { value: "default", name: "멤버 선택" },
@@ -8,7 +10,10 @@ const selectList = [
   { value: "수현", name: "수현" },
 ];
 
-function Input({ setCardList }) {
+function Input() {
+
+  const dispatch = useDispatch();
+
   const [nickname, setNickName] = useState("");
   const [contents, setContents] = useState("");
   const [selected, setSelected] = useState("멤버 선택");
@@ -23,7 +28,8 @@ function Input({ setCardList }) {
       contents,
       member: selected,
     };
-    setCardList((prev) => [...prev, newCard]);
+    dispatch(addCard(newCard))
+    // setCardList((prev) => [...prev, newCard]);
     setSelected("멤버 선택");
     setNickName("");
     setContents("");

@@ -1,8 +1,14 @@
 import React from "react";
 import Card from "./Card";
 import styled from "styled-components";
+import { useSelector } from "react-redux";
 
 function CardList({ cardList, selectMember }) {
+
+  const selectMember = useSelector((state) => {
+    return state.switchMember
+  });
+  
   // selectMember에 따라 filter를 해주고 밑에서 그리자! 라는 취지.
   const filtered =
     selectMember === "전체"
