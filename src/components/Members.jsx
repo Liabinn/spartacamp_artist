@@ -1,23 +1,24 @@
 import styled, { css } from "styled-components";
+import React from 'react'
+import { useContext } from 'react';
+import { EntireContexts } from 'context/EntireContext';
 
 const members = [{ name: "전체" }, { name: "찬혁" }, { name: "수현" }];
 
-function Members({ selectMember, setSelectMember }) {
+function Members() {
+
+  const { selectMember, setSelectMember } = useContext(EntireContexts);
   const onClickMemberSelector = (member) => {
     setSelectMember(member);
   };
 
   return (
     <MembersStyle>
-      {members.map((members) => (
-        <MembersListStyle
-          $selectMember={selectMember}
-          key={members.name}
-          onClick={() => onClickMemberSelector(`${members.name}`)}
-        >
+      {members.map(members => 
+        <MembersButtonStyle $selectMember={selectMember} key={members.name} onClick={()=>onClickMemberSelector(`${members.name}`)}>
           {members.name}
-        </MembersListStyle>
-      ))}
+        </MembersButtonStyle>
+      )}
     </MembersStyle>
   );
 }
@@ -30,7 +31,7 @@ const MembersStyle = styled.ul`
   margin-bottom: 20px;
 `;
 
-const MembersListStyle = styled.li`
+const MembersButtonStyle = styled.button`
   font-size: medium;
   font-weight: bolder;
   text-align: center;
