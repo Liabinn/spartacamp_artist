@@ -1,7 +1,8 @@
-import React, { useState, useContext } from 'react'
+import React, { useState } from 'react'
 import { v4 as uuidv4 } from "uuid"
 import styled from 'styled-components';
-import { EntireContexts } from 'context/EntireContext';
+// import { EntireContexts } from 'context/EntireContext';
+import { useDispatch, useSelector } from 'react-redux';
 
 const selectList = [
   { value: "default", name: "멤버 선택" },
@@ -10,8 +11,13 @@ const selectList = [
 ];
 
 function Input() {
+
+  const letters = useSelector((state)=>state.letter);
+
+  const dispatch = useDispatch();
+
   // Context Data
-  const {setCardList} = useContext(EntireContexts)
+  // const {setCardList} = useContext(EntireContexts)
 
   const [nickname, setNickName] = useState('');
   const [contents, setContents] = useState('');
@@ -27,7 +33,8 @@ function Input() {
       contents,
       member: selected,
     };
-    setCardList((prev) => [newCard, ...prev]);
+    dispatch(letters.addCard(newCard));
+    // setCardList((prev) => [newCard, ...prev]);
 
     setSelected('멤버 선택')
     setNickName('');
