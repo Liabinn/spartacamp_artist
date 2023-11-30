@@ -27,7 +27,7 @@ function Input() {
       contents,
       member: selected,
     };
-    setCardList((prev) => [...prev, newCard]);
+    setCardList((prev) => [newCard, ...prev]);
 
     setSelected('멤버 선택')
     setNickName('');
