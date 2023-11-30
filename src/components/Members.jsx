@@ -1,10 +1,15 @@
-import styled, { css } from "styled-components";
 import { useDispatch, useSelector } from "react-redux";
 import { switchMember } from "redux/modules/membersSlice";
+import React from 'react'
+import styled from 'styled-components';
+import { useContext } from 'react';
+import { EntireContexts } from 'context/EntireContext';
 
 const members = [{ name: "전체" }, { name: "찬혁" }, { name: "수현" }];
 
 function Members() {
+
+const { setSelectMember } = useContext(EntireContexts);
 
   const selectMember = useSelector((state) => {
     return state.membersSlice

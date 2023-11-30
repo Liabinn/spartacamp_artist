@@ -1,24 +1,29 @@
-import React, { useState } from "react";
-import { useNavigate, useLocation } from "react-router-dom";
-import styled from "styled-components";
-import image from "../image/default-avatar.png";
+import React, { useState } from 'react'
+import { useNavigate, useLocation, useParams } from 'react-router-dom'
+import styled from 'styled-components';
+import image from '../image/default-avatar.png'
 
-function Detail({ cardList, setCardList }) {
+
+function Detail() {
   // const params = useParams(); // URL 뒤에 붙은 값들이 객체로 담겨옵니다.
   // const { memberId, name } = params; // 꺼내서 쓰실 때는 구조분해 할당 or 하나씩 접근해서 사용하시면 됩니다
+
+  const {cardList, setCardList} = useContext(EntireContexts)
 
   const location = useLocation();
   const navigate = useNavigate();
   const cardInfo = { ...location.state };
   const founded = cardList.find((card) => card.id === cardInfo.memberId);
 
-  const handleOnClickDelete = () => {
-    if (window.confirm("정말로 삭제하시겠습니까?")) {
-      alert("삭제되었습니다.");
-      setCardList(cardList.filter((card) => card.id !== founded.id));
-      navigate("/");
+  const handleOnClickDelete = () =>{
+    if (window.confirm('정말로 삭제하시겠습니까?')) {
+      alert('삭제되었습니다.')
+      setCardList(cardList.filter(card => card.id !== founded.id));
+      navigate('/');
+    } else {
+      alert('취소되었습니다.')
     }
-  };
+  }
 
   const [isEditing, setIsEditing] = useState(false);
   const [editedContents, setEditedContents] = useState(founded.contents);
@@ -98,13 +103,8 @@ function Detail({ cardList, setCardList }) {
         </CardStyle>
       </DetailBoxStyle>
     </EntireBoxStyle>
-  );
+  )
 }
-
-const EntireBoxStyle = styled.div`
-  display: flex;
-  justify-content: center;
-`;
 
 const Bg = styled.div`
   background-image: url(${image});
@@ -151,7 +151,8 @@ const CardStyle = styled.div`
   padding: 20px;
   margin: 13px;
   transition: 0.3s;
-`;
+
+`
 
 const CardBoxStyle = styled.ul`
   width: 350px;
@@ -216,13 +217,6 @@ const CardButtonStyle = styled.button`
     color: white;
     cursor: pointer;
   }
-`;
-
-const ButtonBoxStyle = styled.div`
-  display: flex;
-  justify-content: flex-end;
-  margin-top: 10px;
-  width: 325px;
-`;
+`
 
 export default Detail;

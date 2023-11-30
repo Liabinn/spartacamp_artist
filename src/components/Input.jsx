@@ -1,8 +1,9 @@
-import React, { useState } from "react";
 import { v4 as uuidv4 } from "uuid";
 import styled from "styled-components";
 import { useDispatch } from "react-redux";
 import { addCard } from "redux/modules/lettersSlice";
+import React, { useState, useContext } from 'react'
+import { EntireContexts } from 'context/EntireContext';
 
 const selectList = [
   { value: "default", name: "멤버 선택" },
@@ -17,6 +18,8 @@ function Input() {
   const [nickname, setNickName] = useState("");
   const [contents, setContents] = useState("");
   const [selected, setSelected] = useState("멤버 선택");
+  // Context Data
+  const {setCardList} = useContext(EntireContexts)
 
   const addCardHandler = () => {
     if (selected === "멤버 선택") return alert("멤버를 선택해주세요");
@@ -29,7 +32,7 @@ function Input() {
       member: selected,
     };
     dispatch(addCard(newCard))
-    // setCardList((prev) => [...prev, newCard]);
+    setCardList((prev) => [...prev, newCard]);
     setSelected("멤버 선택");
     setNickName("");
     setContents("");
