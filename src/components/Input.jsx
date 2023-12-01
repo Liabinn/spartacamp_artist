@@ -1,8 +1,8 @@
 import React, { useState } from 'react'
 import { v4 as uuidv4 } from "uuid"
 import styled from 'styled-components';
-// import { EntireContexts } from 'context/EntireContext';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
+import { addCard } from 'redux/modules/letterSlice';
 
 const selectList = [
   { value: "default", name: "멤버 선택" },
@@ -12,12 +12,7 @@ const selectList = [
 
 function Input() {
 
-  const letters = useSelector((state)=>state.letter);
-
   const dispatch = useDispatch();
-
-  // Context Data
-  // const {setCardList} = useContext(EntireContexts)
 
   const [nickname, setNickName] = useState('');
   const [contents, setContents] = useState('');
@@ -33,8 +28,7 @@ function Input() {
       contents,
       member: selected,
     };
-    dispatch(letters.addCard(newCard));
-    // setCardList((prev) => [newCard, ...prev]);
+    dispatch(addCard(newCard));
 
     setSelected('멤버 선택')
     setNickName('');
@@ -99,6 +93,7 @@ const InputBoxStyle = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  border: 1px solid white;
   box-shadow: 3px 2px 15px 0 rgb(255, 104, 174);
   border-radius: 15px;
   row-gap: 10px;

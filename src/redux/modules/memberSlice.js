@@ -6,12 +6,11 @@ const memberSlice = createSlice({
   name: 'member',
   initialState,
   reducers: {
-    selectMember: (state, action) => {
-      const selectedMember = action.payload;
-      return selectedMember
+    chooseMember: (state, action) => {
+      return action.payload;
     },
   }
 });
 
 export default memberSlice.reducer;
-export const {selectMember} = memberSlice.actions;
+export const {chooseMember} = memberSlice.actions;

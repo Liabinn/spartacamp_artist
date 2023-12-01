@@ -1,24 +1,25 @@
-import React, { useContext, useState } from 'react'
+import React, { useState } from 'react'
 import { useNavigate, useLocation } from 'react-router-dom'
 import styled from 'styled-components';
 import image from '../image/default-avatar.png'
-import { EntireContexts } from 'context/EntireContext';
+import { useDispatch, useSelector } from 'react-redux';
+import { deleteCard, editeCard } from 'redux/modules/letterSlice';
 
 function Detail() {
   // const params = useParams(); // URL 뒤에 붙은 값들이 객체로 담겨옵니다.
   // const { memberId, name } = params; // 꺼내서 쓰실 때는 구조분해 할당 or 하나씩 접근해서 사용하시면 됩니다
-
-  const {cardList, setCardList} = useContext(EntireContexts)
+  const letters = useSelector(state => state.letterSlice);
+  const dispatch = useDispatch();
 
   const location = useLocation();
   const navigate = useNavigate();
   const cardInfo = { ...location.state };
-  const founded = cardList.find((card) => card.id === cardInfo.memberId);
+  const founded = letters?.find((card) => card.id === cardInfo.memberId);
 
   const handleOnClickDelete = () =>{
     if (window.confirm('정말로 삭제하시겠습니까?')) {
       alert('삭제되었습니다.')
-      setCardList(cardList.filter(card => card.id !== founded.id));
+      dispatch(deleteCard(founded.id));
       navigate('/');
     } 
   }
@@ -38,11 +39,12 @@ function Detail() {
   };
 
   //onClick 시 기존 contents => editedContents로 변경
-  const handleClickModifyContents = (memberId) => {
-    let copy = [...cardList];
-    let found = copy.find((el) => el.id === memberId);
-    found.contents = editedContents;
-    setCardList(copy);
+  const handleClickModifyContents = () => {
+    if (founded.contents === editedContents) {
+      alert("수정사항이 없습니다.");
+      return setIsEditing(false);
+    }
+    dispatch(editeCard({id: founded.id, editedContents}));
     setIsEditing(false);
     alert("수정이 완료되었습니다.");
   };
@@ -60,12 +62,12 @@ function Detail() {
         <CardStyle>
           <Bg></Bg>
           <CardBoxStyle>
-            <CardNameStyle>To. {founded.member}</CardNameStyle>
-            <CardNameStyle>From. {founded.nickname}</CardNameStyle>
+            <CardNameStyle>To. {founded?.member}</CardNameStyle>
+            <CardNameStyle>From. {founded?.nickname}</CardNameStyle>
             {isEditing ? <EdieingTextareaStyle type='text' maxLength={100} onChange={handleChangeEditText}>{founded.contents}</EdieingTextareaStyle> : <CardContentStyle>{founded.contents}</CardContentStyle>}
             <ButtonBoxStyle>
               {isEditing ? <CardButtonStyle onClick={() => {
-              handleClickModifyContents(founded.id)
+              handleClickModifyContents(founded?.id)
             }}>수정완료</CardButtonStyle> : <CardButtonStyle onClick={handleOnClickModify}>수정</CardButtonStyle>}
             {isEditing ? <CardButtonStyle onClick={handleOnClickModify}>수정취소</CardButtonStyle> : <CardButtonStyle onClick={handleOnClickDelete}>삭제</CardButtonStyle>}
             </ButtonBoxStyle>

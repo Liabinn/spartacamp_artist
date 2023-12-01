@@ -32,7 +32,15 @@ const letterSlice = createSlice({
     deleteCard: (state, action) => {
       return state.filter((item) => item.id !== action.payload)
     },
-    editeCard: (state, action) => {},
+    editeCard: (state, action) => {
+      const {id, editedContents} = action.payload;
+      return state.map((item) => {
+        if (item.id === id) {
+          return {...item, contents: editedContents};
+        }
+        return item
+      })
+    },
   }
 });
 

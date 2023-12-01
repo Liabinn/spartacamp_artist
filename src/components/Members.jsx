@@ -1,28 +1,24 @@
 import styled, { css } from "styled-components";
 import React from 'react'
 import { useSelector, useDispatch } from "react-redux";
-// import { selectMember } from "redux/modules/memberSlice";
-// import { useContext } from 'react';
-// import { EntireContexts } from 'context/EntireContext';
+import { chooseMember } from "redux/modules/memberSlice";
 
-const members = [{ name: "전체" }, { name: "찬혁" }, { name: "수현" }];
+const members = ["전체", "찬혁", "수현"];
 
 function Members() {
 
-  const selectMember = useSelector(state => state.member);
+  const selectMember = useSelector(state => state.memberSlice);
   const dispatch = useDispatch();
 
-  // const { selectMember, setSelectMember } = useContext(EntireContexts);
   const onClickMemberSelector = (event) => {
-    // setSelectMember(member);
-    dispatch(selectMember(event.target.textContent))
+    dispatch(chooseMember(event.target.textContent))
   };
 
   return (
     <MembersStyle>
       {members.map(members => 
-        <MembersButtonStyle $selectMember={selectMember} key={members.name} onClick={()=>onClickMemberSelector(`${members.name}`)}>
-          {members.name}
+        <MembersButtonStyle $selectMember={selectMember} key={members} onClick={onClickMemberSelector}>
+          {members}
         </MembersButtonStyle>
       )}
     </MembersStyle>

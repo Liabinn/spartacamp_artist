@@ -1,19 +1,17 @@
-// import React, { useContext } from 'react'
 import Card from "./Card";
 import styled from "styled-components";
 import { useSelector } from "react-redux";
-// import { EntireContexts } from 'context/EntireContext';
 
 function CardList() {
 
-  const selectMember = useSelector(state => state.member)
-  const letters = useSelector(state => state.letters)
-  // const {cardList, selectMember} = useContext(EntireContexts)
+  const selectMember = useSelector(state => state.memberSlice)
+  const letters = useSelector(state => state.letterSlice)
+
   // selectMember에 따라 filter를 해주고 밑에서 그리자! 라는 취지.
   const filtered =
     selectMember === "전체"
       ? letters
-      : letters.filter((member) => member.member === selectMember);
+      : letters?.filter((member) => member.member === selectMember);
 
   // 데이터가 없을 시 보여줄 UI
   if (filtered.length === 0) {
