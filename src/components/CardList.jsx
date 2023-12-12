@@ -1,8 +1,10 @@
-import React from "react";
+import React, { useContext } from 'react'
 import Card from "./Card";
 import styled from "styled-components";
+import { EntireContexts } from 'context/EntireContext';
 
-function CardList({ cardList, selectMember }) {
+function CardList() {
+  const {cardList, selectMember} = useContext(EntireContexts)
   // selectMember에 따라 filter를 해주고 밑에서 그리자! 라는 취지.
   const filtered =
     selectMember === "전체"
@@ -20,19 +22,18 @@ function CardList({ cardList, selectMember }) {
       </CardListStyle>
     );
   }
-
+  
   return (
     <CardListStyle>
-      {filtered.map((member) => {
+      {filtered.map(member => {
         return (
           <Card
-            key={member.id}
-            memberId={member.id}
-            member={member.member}
-            nickname={member.nickname}
-            contents={member.contents}
-          />
-        );
+        key={member.id}
+        memberId={member.id}
+        member={member.member}
+        nickname={member.nickname}
+        contents={member.contents} />
+        )
       })}
     </CardListStyle>
   );

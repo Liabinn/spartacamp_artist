@@ -1,24 +1,27 @@
-import React, { useState } from "react";
-import { useNavigate, useLocation } from "react-router-dom";
-import styled from "styled-components";
-import image from "../image/default-avatar.png";
+import React, { useContext, useState } from 'react'
+import { useNavigate, useLocation } from 'react-router-dom'
+import styled from 'styled-components';
+import image from '../image/default-avatar.png'
+import { EntireContexts } from 'context/EntireContext';
 
-function Detail({ cardList, setCardList }) {
+function Detail() {
   // const params = useParams(); // URL 뒤에 붙은 값들이 객체로 담겨옵니다.
   // const { memberId, name } = params; // 꺼내서 쓰실 때는 구조분해 할당 or 하나씩 접근해서 사용하시면 됩니다
+
+  const {cardList, setCardList} = useContext(EntireContexts)
 
   const location = useLocation();
   const navigate = useNavigate();
   const cardInfo = { ...location.state };
   const founded = cardList.find((card) => card.id === cardInfo.memberId);
 
-  const handleOnClickDelete = () => {
-    if (window.confirm("정말로 삭제하시겠습니까?")) {
-      alert("삭제되었습니다.");
-      setCardList(cardList.filter((card) => card.id !== founded.id));
-      navigate("/");
-    }
-  };
+  const handleOnClickDelete = () =>{
+    if (window.confirm('정말로 삭제하시겠습니까?')) {
+      alert('삭제되었습니다.')
+      setCardList(cardList.filter(card => card.id !== founded.id));
+      navigate('/');
+    } 
+  }
 
   const [isEditing, setIsEditing] = useState(false);
   const [editedContents, setEditedContents] = useState(founded.contents);
@@ -59,40 +62,12 @@ function Detail({ cardList, setCardList }) {
           <CardBoxStyle>
             <CardNameStyle>To. {founded.member}</CardNameStyle>
             <CardNameStyle>From. {founded.nickname}</CardNameStyle>
-            {isEditing ? (
-              <EdieingTextareaStyle
-                type="text"
-                maxLength={100}
-                onChange={handleChangeEditText}
-              >
-                {founded.contents}
-              </EdieingTextareaStyle>
-            ) : (
-              <CardContentStyle>{founded.contents}</CardContentStyle>
-            )}
+            {isEditing ? <EdieingTextareaStyle type='text' maxLength={100} onChange={handleChangeEditText}>{founded.contents}</EdieingTextareaStyle> : <CardContentStyle>{founded.contents}</CardContentStyle>}
             <ButtonBoxStyle>
-              {isEditing ? (
-                <CardButtonStyle
-                  onClick={() => {
-                    handleClickModifyContents(founded.id);
-                  }}
-                >
-                  수정완료
-                </CardButtonStyle>
-              ) : (
-                <CardButtonStyle onClick={handleOnClickModify}>
-                  수정
-                </CardButtonStyle>
-              )}
-              {isEditing ? (
-                <CardButtonStyle onClick={handleOnClickModify}>
-                  수정취소
-                </CardButtonStyle>
-              ) : (
-                <CardButtonStyle onClick={handleOnClickDelete}>
-                  삭제
-                </CardButtonStyle>
-              )}
+              {isEditing ? <CardButtonStyle onClick={() => {
+              handleClickModifyContents(founded.id)
+            }}>수정완료</CardButtonStyle> : <CardButtonStyle onClick={handleOnClickModify}>수정</CardButtonStyle>}
+            {isEditing ? <CardButtonStyle onClick={handleOnClickModify}>수정취소</CardButtonStyle> : <CardButtonStyle onClick={handleOnClickDelete}>삭제</CardButtonStyle>}
             </ButtonBoxStyle>
           </CardBoxStyle>
         </CardStyle>
